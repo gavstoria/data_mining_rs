@@ -25,9 +25,15 @@ from sklearn.metrics import (
     f1_score,
     mean_absolute_error,
     r2_score,
-    root_mean_squared_error,
     silhouette_score,
 )
+try:
+    from sklearn.metrics import root_mean_squared_error
+except ImportError:
+    from sklearn.metrics import mean_squared_error
+    import numpy as np
+    def root_mean_squared_error(y_true, y_pred):
+        return np.sqrt(mean_squared_error(y_true, y_pred))
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
